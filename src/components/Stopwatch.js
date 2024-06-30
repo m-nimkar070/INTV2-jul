@@ -51,7 +51,7 @@ const Stopwatch = () => {
       <div className="container">
         <h1>Stopwatch</h1>
         <div className="timer">
-          
+          <p>Time:</p>
           <div>{String(timer.m)}</div>:
           <div>{String(timer.s).padStart(2, "0")}</div>
         </div>
