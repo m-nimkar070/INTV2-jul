@@ -3,7 +3,7 @@ import "./stopwatch.css";
 
 const Stopwatch = () => {
   const [minutes, setMinutes] = useState(0)
-  const [seconds , setSeconds] = useState(50);
+  const [seconds , setSeconds] = useState(0);
   const [name , setName] = useState("Start");
 
   const [running , setRunning] = useState(false);
