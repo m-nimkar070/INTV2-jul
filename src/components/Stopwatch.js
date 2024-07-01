@@ -2,29 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./stopwatch.css";
 
 const Stopwatch = () => {
-  const [timer, setTimer] = useState({
-    m: 0,
-    s: 0,
-  });
+  const [minutes, setMinutes] = useState(0)
+  const [seconds , setSeconds] = useState(50);
+  const [name , setName] = useState("Start");
 
   const [running , setRunning] = useState(false);
 
   const startTimer = () => {
-    console.log(timer);
-    setTimer((prev) => {
-      let { m, s } = prev;
-
-      s += 1;
-      if (s === 60) {
-        s = 0;
-        m += 1;
-      }
-      if (m === 60) {
-        m = 0;
-      }
-
-      return {m, s};
-    });
+      setSeconds((prevSeconds) => {
+        if(prevSeconds === 59){
+          setMinutes((prevMinutes) => prevMinutes +1);
+          return 0
+        }else{
+          return prevSeconds + 1; 
+        }
+      })
   };
 
   useEffect(() => {
@@ -35,14 +27,17 @@ const Stopwatch = () => {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [running , timer.s]);
+  }, [running]);
 
   const handleStart = () =>{
     setRunning(!running);
+    setName((prev)=> prev === "Start" ?"Stop" : "Start");
   }
 
   const handleReset = () =>{
-    setTimer({m:0,s:0});
+    setMinutes(0);
+    setSeconds(0);
+    setName("Start");
     setRunning(false);
   }
 
@@ -52,15 +47,15 @@ const Stopwatch = () => {
         <h1>Stopwatch</h1>
         <div className="timer">
           <p>Time:</p>
-          <div>{String(timer.m)}</div>:
-          <div>{String(timer.s).padStart(2, "0")}</div>
+          <div>{minutes}</div>:
+          <div>{String(seconds).padStart(2, "0")}</div>
         </div>
         <div className="buttons">
           <button
             className="btn"
             onClick={handleStart}
           >
-            {running ? "Stop" : "Start"}
+            {name}
           </button>
           <button
             className="btn"
