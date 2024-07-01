@@ -25,6 +25,8 @@ const Stopwatch = () => {
       interval = setInterval(() => {
         startTimer();
       }, 1000);
+    }else if (!running && seconds !== 0) {
+      clearInterval(interval);
     }
     return () => clearInterval(interval);
   }, [running]);
@@ -44,27 +46,19 @@ const Stopwatch = () => {
   return (
     <>
       <div className="container">
-        <h1>Stopwatch</h1>
-        <div className="timer">
-          <p>Time:</p>
-          <div>{minutes}</div>:
-          <div>{String(seconds).padStart(2, "0")}</div>
-        </div>
-        <div className="buttons">
-          <button
-            className="btn"
-            onClick={handleStart}
-          >
-            {name}
-          </button>
-          <button
-            className="btn"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-        </div>
+      <h1>Stopwatch</h1>
+      <div className="timer">
+        <p>Time: {minutes}:{String(seconds).padStart(2, "0")}</p>
       </div>
+      <div className="buttons">
+        <button className="btn" onClick={handleStart}>
+          {name}
+        </button>
+        <button className="btn" onClick={handleReset}>
+          Reset
+        </button>
+      </div>
+    </div>
     </>
   );
 };
